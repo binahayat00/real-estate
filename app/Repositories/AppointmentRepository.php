@@ -42,7 +42,7 @@ class AppointmentRepository
             );
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         return $this->model()::where([
             'id' => $id
