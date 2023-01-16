@@ -4,18 +4,22 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Appointment\AddZipcodeToAppointmentsRequest;
+use App\Http\Requests\Appointment\AssignAgentToAppointmentRequest;
 use App\Http\Requests\Appointment\StoreRequest;
 use App\Http\Requests\Appointment\UpdateRequest;
 use App\Models\Appointment;
+use App\Repositories\AgentAppointmentRepository;
 use App\Repositories\AppointmentRepository;
 use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
     public $appointmentRepository;
-    public function __construct(AppointmentRepository $appointmentRepository)
+    public $agentAppointmentRepository;
+    public function __construct()
     {
-        $this->appointmentRepository = $appointmentRepository;
+        $this->appointmentRepository = new AppointmentRepository();
+        $this->agentAppointmentRepository = new AgentAppointmentRepository();
     }
     public function index()
     {
@@ -43,5 +47,10 @@ class AppointmentController extends Controller
             $result[] = $this->appointmentRepository->update($appointmentId, ['zipcode' => $data['zipcode']]);
         }
         return $result;
+    }
+
+    public function assignAgentToAppointment(AssignAgentToAppointmentRequest $request)
+    {
+        return $this->agentAppointmentRepository->assignAgentToAppointment($request->validated());
     }
 }
