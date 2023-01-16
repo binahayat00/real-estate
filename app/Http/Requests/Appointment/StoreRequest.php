@@ -30,6 +30,10 @@ class StoreRequest extends FormRequest
             'date' => '',
             'distance_from_realestate' => '',
             'estimated_time' => '',
+            'name' => '',
+            'surname' => '',
+            'email' => '',
+            'phone_number' => '',
         ];
     }
 

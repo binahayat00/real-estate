@@ -15,4 +15,9 @@ class Appointment extends Model
         'distance_from_realestate',
         'estimated_time',
     ];
+
+    public function appointmentAttendee()
+    {
+        return $this->hasMany(AppointmentAttendee::class);
+    }
 }

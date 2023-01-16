@@ -9,6 +9,7 @@ use App\Http\Requests\Appointment\StoreRequest;
 use App\Http\Requests\Appointment\UpdateRequest;
 use App\Models\Appointment;
 use App\Repositories\AgentAppointmentRepository;
+use App\Repositories\AppointmentAttendeeRepository;
 use App\Repositories\AppointmentRepository;
 use Illuminate\Http\Request;
 
@@ -16,10 +17,12 @@ class AppointmentController extends Controller
 {
     public $appointmentRepository;
     public $agentAppointmentRepository;
+    public $appointmentAttendeeRepository;
     public function __construct()
     {
         $this->appointmentRepository = new AppointmentRepository();
         $this->agentAppointmentRepository = new AgentAppointmentRepository();
+        $this->appointmentAttendeeRepository = new AppointmentAttendeeRepository();
     }
     public function index()
     {
@@ -27,7 +30,15 @@ class AppointmentController extends Controller
     }
     public function store(StoreRequest $request)
     {
-        return $this->appointmentRepository->store($request->validated());
+        $data = $request->validated();
+        $appointment = $this->appointmentRepository->store($data);
+        return $this->appointmentAttendeeRepository->store([
+            'name' => $data['name'],
+            'surname' => $data['surname'],
+            'email' => $data['email'],
+            'phone_number' => $data['phone_number'],
+            'appointment_id' => $appointment->id
+        ]);
     }
 
     public function update(Appointment $appointment, UpdateRequest $updateRequest)
