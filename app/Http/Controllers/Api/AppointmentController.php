@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Appointment\AddZipcodeToAppointmentsRequest;
 use App\Http\Requests\Appointment\StoreRequest;
 use App\Http\Requests\Appointment\UpdateRequest;
 use App\Models\Appointment;
@@ -30,7 +31,17 @@ class AppointmentController extends Controller
         return $this->appointmentRepository->update($appointment->id, $updateRequest->validated());
     }
 
-    public function destroy(Appointment $appointment){
+    public function destroy(Appointment $appointment)
+    {
         return $this->appointmentRepository->destroy($appointment->id);
+    }
+
+    public function addZipcodeToAppointments(AddZipcodeToAppointmentsRequest $request)
+    {
+        $data = $request->validated();
+        foreach ($data['appointmentIds'] as $appointmentId) {
+            $result[] = $this->appointmentRepository->update($appointmentId, ['zipcode' => $data['zipcode']]);
+        }
+        return $result;
     }
 }

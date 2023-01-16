@@ -33,4 +33,5 @@ Route::controller(AppointmentController::class)->group(function () {
     Route::post('appointment', 'store');
     Route::put('appointment/{appointment}', 'update');
     Route::delete('appointment/{appointment}', 'destroy');
+    Route::put('addZipcodeToAppointments/', 'addZipcodeToAppointments');
 });
