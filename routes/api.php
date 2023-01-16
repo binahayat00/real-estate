@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,4 +28,9 @@ Route::controller(AuthController::class)->group(function () {
 
 });
 
-Route::controller()
+Route::controller(AppointmentController::class)->group(function () {
+    Route::get('appointment', 'index');
+    Route::post('appointment', 'store');
+    Route::put('appointment/{appointment}', 'update');
+    Route::delete('appointment/{appointment}', 'destroy');
+});
