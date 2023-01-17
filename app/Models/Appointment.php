@@ -13,7 +13,8 @@ class Appointment extends Model
         'zipcode',
         'date',
         'distance_from_realestate',
-        'estimated_time',
+        'arriving_estimated_time',
+        'returning_estimated_time',
     ];
 
     public function appointmentAttendee()

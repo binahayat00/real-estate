@@ -29,7 +29,8 @@ class UpdateRequest extends FormRequest
             'zipcode' => '',
             'date' => '',
             'distance_from_realestate' => '',
-            'estimated_time' => '',
+            'arriving_estimated_time' => '',
+            'returning_estimated_time' => '',
         ];
     }
 

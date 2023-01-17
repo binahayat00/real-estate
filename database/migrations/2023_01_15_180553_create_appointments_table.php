@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('zipcode')->nullable();
             $table->dateTime('date')->nullable();
             $table->string('distance_from_realestate')->nullable();
-            $table->string('estimated_time')->nullable();
+            $table->string('arriving_estimated_time')->nullable();
+            $table->string('returning_estimated_time')->nullable();
             $table->timestamps();
         });
     }
