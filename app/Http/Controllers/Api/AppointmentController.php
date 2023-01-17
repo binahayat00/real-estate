@@ -11,6 +11,7 @@ use App\Models\Appointment;
 use App\Repositories\AgentAppointmentRepository;
 use App\Repositories\AppointmentAttendeeRepository;
 use App\Repositories\AppointmentRepository;
+use App\Services\PostCodeService;
 use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
@@ -18,11 +19,13 @@ class AppointmentController extends Controller
     public $appointmentRepository;
     public $agentAppointmentRepository;
     public $appointmentAttendeeRepository;
+    public $postCodeService;
     public function __construct()
     {
         $this->appointmentRepository = new AppointmentRepository();
         $this->agentAppointmentRepository = new AgentAppointmentRepository();
         $this->appointmentAttendeeRepository = new AppointmentAttendeeRepository();
+        $this->postCodeService = new PostCodeService();
     }
     public function index()
     {
@@ -31,7 +34,12 @@ class AppointmentController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
+        $isValidatePostCode = ($data['zipcode'] ?? false) ? $this->postCodeService->validatePostCode($data['zipcode']) : ['result' => true];
+        if ($isValidatePostCode['result'] == false)
+            return $isValidatePostCode['message'];
+
         $appointment = $this->appointmentRepository->store($data);
+
         return $this->appointmentAttendeeRepository->store([
             'name' => $data['name'],
             'surname' => $data['surname'],
@@ -43,7 +51,12 @@ class AppointmentController extends Controller
 
     public function update(Appointment $appointment, UpdateRequest $updateRequest)
     {
-        return $this->appointmentRepository->update($appointment->id, $updateRequest->validated());
+        $data = $updateRequest->validated();
+        $isValidatePostCode = ($data['zipcode'] ?? false) ? $this->postCodeService->validatePostCode($data['zipcode']) : ['result' => true];
+        if ($isValidatePostCode['result'] == false)
+            return $isValidatePostCode['message'];
+
+        return $this->appointmentRepository->update($appointment->id, $data);
     }
 
     public function destroy(Appointment $appointment)
@@ -54,6 +67,10 @@ class AppointmentController extends Controller
     public function addZipcodeToAppointments(AddZipcodeToAppointmentsRequest $request)
     {
         $data = $request->validated();
+        $isValidatePostCode = ($data['zipcode'] ?? false) ? $this->postCodeService->validatePostCode($data['zipcode']) : ['result' => true];
+        if ($isValidatePostCode['result'] == false)
+            return $isValidatePostCode['message'];
+
         foreach ($data['appointmentIds'] as $appointmentId) {
             $result[] = $this->appointmentRepository->update($appointmentId, ['zipcode' => $data['zipcode']]);
         }

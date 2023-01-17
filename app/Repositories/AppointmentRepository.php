@@ -24,7 +24,7 @@ class AppointmentRepository
 
     public function all()
     {
-        return $this->model()::all();
+        return $this->model()::with('appointmentAttendee')->get();
     }
 
     public function store(array $data)
