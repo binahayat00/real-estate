@@ -38,6 +38,8 @@ class AppointmentController extends Controller
         if ($isValidatePostCode['result'] == false)
             return $isValidatePostCode['message'];
 
+        $data['distance_from_realestate'] = ($data['zipcode'] ?? false) ? $this->postCodeService->distanceFromRealestate($data['zipcode']) : 0;
+        
         $appointment = $this->appointmentRepository->store($data);
 
         return $this->appointmentAttendeeRepository->store([
