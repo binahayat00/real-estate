@@ -1,3 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>discussdesk.com - Login form in PHP mysql</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="{{ asset ('css/style.css') }}" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
 <div class="row justify-content-center">
 
     <div class="col-xl-10 col-lg-12 col-md-9">
@@ -69,3 +83,6 @@
     </div>
 
 </div>
+
+</body>
+</html>
