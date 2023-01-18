@@ -58,7 +58,7 @@ class PostCodeService implements PostCodeServiceInterface
         if ($isValidatePostCode['result'] == false)
             return $isValidatePostCode['message'];
 
-        $realtorZipcode = $this->defineRepository->getByName('realtor_zipcode');
+        $realtorZipcode = PostCode::realtorZipcode->default();
         $realtorLocation = $this->getDetailOfPostCode($realtorZipcode)['result'];
         $postCodeLocation = $this->getDetailOfPostCode($postCode)['result'];
 

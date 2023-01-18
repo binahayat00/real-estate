@@ -11,21 +11,24 @@ use App\Models\Appointment;
 use App\Repositories\AgentAppointmentRepository;
 use App\Repositories\AppointmentAttendeeRepository;
 use App\Repositories\AppointmentRepository;
+use App\Services\MapService;
 use App\Services\PostCodeService;
 use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
-    public $appointmentRepository;
-    public $agentAppointmentRepository;
-    public $appointmentAttendeeRepository;
-    public $postCodeService;
+    protected $appointmentRepository;
+    protected $agentAppointmentRepository;
+    protected $appointmentAttendeeRepository;
+    protected $postCodeService;
+    protected $mapService;
     public function __construct()
     {
         $this->appointmentRepository = new AppointmentRepository();
         $this->agentAppointmentRepository = new AgentAppointmentRepository();
         $this->appointmentAttendeeRepository = new AppointmentAttendeeRepository();
         $this->postCodeService = new PostCodeService();
+        $this->mapService = new MapService();
     }
     public function index()
     {
@@ -38,15 +41,16 @@ class AppointmentController extends Controller
         if ($isValidatePostCode['result'] == false)
             return $isValidatePostCode['message'];
 
-        $data['distance_from_realestate'] = ($data['zipcode'] ?? false) ? $this->postCodeService->distanceFromRealestate($data['zipcode']) : 0;
-        
+        $mapsData = ($data['zipcode'] ?? false) ? $this->mapService->calculateDistancesForAppointmentTable($data['zipcode']) : $data;
+        $data = array_merge($data , $mapsData);
+
         $appointment = $this->appointmentRepository->store($data);
 
         return $this->appointmentAttendeeRepository->store([
-            'name' => $data['name'],
-            'surname' => $data['surname'],
-            'email' => $data['email'],
-            'phone_number' => $data['phone_number'],
+            'name' => $data['name'] ?? '',
+            'surname' => $data['surname'] ?? '',
+            'email' => $data['email'] ?? '',
+            'phone_number' => $data['phone_number'] ?? '',
             'appointment_id' => $appointment->id
         ]);
     }
@@ -57,6 +61,9 @@ class AppointmentController extends Controller
         $isValidatePostCode = ($data['zipcode'] ?? false) ? $this->postCodeService->validatePostCode($data['zipcode']) : ['result' => true];
         if ($isValidatePostCode['result'] == false)
             return $isValidatePostCode['message'];
+
+        $mapsData = ($data['zipcode'] ?? false) ? $this->mapService->calculateDistancesForAppointmentTable($data['zipcode']) : $data;
+        $data = array_merge($data , $mapsData);
 
         return $this->appointmentRepository->update($appointment->id, $data);
     }
