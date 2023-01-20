@@ -4,7 +4,7 @@ This app is built with a repository design pattern for real estate agencies and 
 This app is RESTAPI and Used Ajax for Call API.
 
 ## For run you should:
-- Run ``` Php artisan migrate:refresh --seed ``` to seeder
+- Run ``` Php artisan migrate:refresh --seed ``` to run seeder
 - Use PHP 8.2
 - Add JWT_SECRET to env
 - Add JWT_ALGO to env
