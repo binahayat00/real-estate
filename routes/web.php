@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('appointments');
 });
 
 Route::get('/login', function () {
@@ -24,3 +24,7 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
+
+Route::get('/appointment/{id}', function ($id) {
+    return view('appointment',['id' => $id]);
+});

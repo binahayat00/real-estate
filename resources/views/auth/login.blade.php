@@ -8,6 +8,9 @@
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="{{ asset ('css/style.css') }}" rel="stylesheet" type="text/css">
+    {{--  <script type="text/javascript" src="{{ asset('js/jquery-cookie.js') }}"></script>  --}}
+    <script type="text/javascript" src="{{ asset('js/jquery-3.6.3.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/auth.js') }}"></script>
 
 </head>
 
@@ -61,7 +64,7 @@
                                                 Me</label>
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary btn-user btn-block">
+                                    <button id="login-button" type="button" class="btn btn-primary btn-user btn-block">
                                         Login
                                     </button>
                                     {{-- <hr>
@@ -90,4 +93,8 @@
     </div>
 
 </body>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </html>

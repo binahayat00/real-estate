@@ -27,7 +27,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'zipcode' => '',
-            'date' => '',
+            'date' => 'date',
             'distance_from_realestate' => '',
             'arriving_estimated_time' => '',
             'returning_estimated_time' => '',

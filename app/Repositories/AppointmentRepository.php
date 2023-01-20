@@ -27,6 +27,11 @@ class AppointmentRepository
         return $this->model()::with('appointmentAttendee')->get();
     }
 
+    public function show($id)
+    {
+        return $this->model()::where(['id' => $id])->with('appointmentAttendee')->first();
+    }
+
     public function store(array $data)
     {
         return $this->model()::create($data);
